@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -11,7 +12,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class MyTestOpMode extends LinearOpMode {
     final double MAX_SPEED_41 = 1.0;
     final double FEEDER_41 = 0.67;
-    final double SHOOTER_41 = 0.41;
+    final double SHOOTER_41 = 0.52;
     @Override
     public void runOpMode() throws InterruptedException {
         DcMotor leftDrive_67 = hardwareMap.dcMotor.get("leftDrive");
@@ -31,6 +32,7 @@ public class MyTestOpMode extends LinearOpMode {
             double leftInput = -gamepad1.left_stick_y * MAX_SPEED_41;
             double rightInput = -gamepad1.right_stick_y * MAX_SPEED_41;
 
+            rightDrive_67.setDirection(FORWARD);
             leftDrive_67.setDirection(REVERSE);
             leftDrive_67.setPower(leftInput);
             rightDrive_67.setPower(rightInput);
