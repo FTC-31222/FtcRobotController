@@ -1,5 +1,5 @@
 package org.firstinspires.ftc.teamcode;
-
+// Libraries
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
@@ -10,11 +10,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name="Drive Test")
 public class MyTestOpMode extends LinearOpMode {
+    // Motor speeds
     final double MAX_SPEED_41 = 1.0;
     final double FEEDER_41 = 0.67;
     final double SHOOTER_41 = 0.52;
+    final double FASTER_SHOOTER_41 = 0.67;
     @Override
     public void runOpMode() throws InterruptedException {
+
         DcMotor leftDrive_67 = hardwareMap.dcMotor.get("leftDrive");
         DcMotor rightDrive_67 = hardwareMap.dcMotor.get("rightDrive");
 
@@ -24,7 +27,12 @@ public class MyTestOpMode extends LinearOpMode {
         DcMotor shooter_67 = hardwareMap.dcMotor.get("shooter_67");
 
 
+
         waitForStart();
+    // init the motors first so it doesn't run during boot up
+
+        //leftDrive_67.setPower(0);
+        //rightDrive_67.setPower(0);
 
         if(isStopRequested()) return;
 
@@ -34,6 +42,7 @@ public class MyTestOpMode extends LinearOpMode {
 
             rightDrive_67.setDirection(FORWARD);
             leftDrive_67.setDirection(REVERSE);
+
             leftDrive_67.setPower(leftInput);
             rightDrive_67.setPower(rightInput);
 
@@ -50,17 +59,20 @@ public class MyTestOpMode extends LinearOpMode {
                 feederRight_67.setPower(0);
                 feederLeft_67.setPower(0);
             }
-            if(gamepad2.dpad_up){
-                shooter_67.setPower(SHOOTER_41);
 
-            }
-            else if(gamepad2.dpad_down){
+            // Handle shooter wheel speed
+            // If user press dpad_up, we spin at "normal" speed
+            // If left_trigger is pressed, we increase the speed.
+            if (gamepad2.dpad_up) {
+                shooter_67.setPower(SHOOTER_41);
+            } else if (gamepad2.left_trigger > 0.0) {
+                shooter_67.setPower(FASTER_SHOOTER_41);
+            } else if (gamepad2.dpad_down) {
                 shooter_67.setPower(-SHOOTER_41);
-            }
-            else{
+            } else {
                 shooter_67.setPower(0);
             }
-
         }
     }
 }
+
