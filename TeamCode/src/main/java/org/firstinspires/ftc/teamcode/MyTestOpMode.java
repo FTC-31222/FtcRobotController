@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @TeleOp(name="Drive Test")
 public class MyTestOpMode extends LinearOpMode {
@@ -24,8 +27,10 @@ public class MyTestOpMode extends LinearOpMode {
         CRServo feederRight_67 = hardwareMap.crservo.get("feederRight");
         CRServo feederLeft_67 =  hardwareMap.crservo.get("feederLeft");
 
-        DcMotor shooter_67 = hardwareMap.dcMotor.get("shooter_67");
-
+        DcMotorEx shooter_67 = (DcMotorEx) hardwareMap.dcMotor.get("shooter_67");
+        shooter_67.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        shooter_67.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooter_67.setVelocityPIDFCoefficients(33,0,0,0);
 
 
         waitForStart();
@@ -64,14 +69,19 @@ public class MyTestOpMode extends LinearOpMode {
             // If user press dpad_up, we spin at "normal" speed
             // If left_trigger is pressed, we increase the speed.
             if (gamepad2.dpad_up) {
-                shooter_67.setPower(SHOOTER_41);
+                shooter_67.setVelocity(150, AngleUnit.DEGREES);
+                shooter_67.setPower(1);
             } else if (gamepad2.left_trigger > 0.0) {
-                shooter_67.setPower(FASTER_SHOOTER_41);
+                shooter_67.setPower(FASTER_SHOOTER_41);;
             } else if (gamepad2.dpad_down) {
                 shooter_67.setPower(-SHOOTER_41);
             } else {
                 shooter_67.setPower(0);
             }
+            telemetry.addData("Shooter Power", shooter_67.getVelocity(AngleUnit.DEGREES));
+
+
+            telemetry.update();
         }
     }
 }
