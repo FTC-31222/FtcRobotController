@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 @TeleOp(name="Drive Test")
 public class MyTestOpMode extends LinearOpMode {
     // Motor speeds
-    final double MAX_SPEED_41 = 1.0;
+    final double MAX_SPEED_41 = 0.75;
     final double FEEDER_41 = 0.67;
     final double SHOOTER_41 = 0.52;
     final double FASTER_SHOOTER_41 = 0.67;
@@ -30,7 +30,7 @@ public class MyTestOpMode extends LinearOpMode {
         DcMotorEx shooter_67 = (DcMotorEx) hardwareMap.dcMotor.get("shooter_67");
         shooter_67.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         shooter_67.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        shooter_67.setVelocityPIDFCoefficients(33,0,0,0);
+        shooter_67.setVelocityPIDFCoefficients(139,0,0,0); //33 before
 
 
         waitForStart();
@@ -42,8 +42,13 @@ public class MyTestOpMode extends LinearOpMode {
         if(isStopRequested()) return;
 
         while(opModeIsActive()) {
-            double leftInput = -gamepad1.left_stick_y * MAX_SPEED_41;
-            double rightInput = -gamepad1.right_stick_y * MAX_SPEED_41;
+            //double leftInput = (-gamepad1.left_stick_y * MAX_SPEED_41) + (gamepad1.right_stick_x * MAX_SPEED_41);
+           // double rightInput = (-gamepad1.left_stick_y * MAX_SPEED_41) + (-gamepad1.right_stick_x * MAX_SPEED_41);
+            double drive = -gamepad1.right_stick_y; // Forward/Backward
+            double turn  =  gamepad1.right_stick_x; // Turning
+
+            double leftInput  = (drive + turn) * MAX_SPEED_41;
+            double rightInput = (drive - turn) * MAX_SPEED_41;
 
             rightDrive_67.setDirection(FORWARD);
             leftDrive_67.setDirection(REVERSE);
