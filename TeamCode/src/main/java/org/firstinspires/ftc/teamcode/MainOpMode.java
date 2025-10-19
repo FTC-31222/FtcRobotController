@@ -11,11 +11,11 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
-@TeleOp(name="Drive Test")
-public class MyTestOpMode extends LinearOpMode {
+@TeleOp(name="MainOpMode")
+public class MainOpMode extends LinearOpMode {
     // Motor speeds
     final double MAX_SPEED_41 = 0.75;
-    final double FEEDER_41 = 0.67;
+    final double FEEDER_41 = 1;
     final double SHOOTER_41 = 0.52;
     final double FASTER_SHOOTER_41 = 0.67;
     @Override
@@ -57,17 +57,11 @@ public class MyTestOpMode extends LinearOpMode {
             rightDrive_67.setPower(rightInput);
 
             if(gamepad2.y) {
-                feederRight_67.setPower(FEEDER_41);
-                feederLeft_67.setPower(-FEEDER_41);
-            }
-            else if (gamepad2.a) {
                 feederRight_67.setPower(-FEEDER_41);
                 feederLeft_67.setPower(FEEDER_41);
-
-            }
-            else{
-                feederRight_67.setPower(0);
-                feederLeft_67.setPower(0);
+            } else{
+                feederRight_67.setPower(FEEDER_41);
+                feederLeft_67.setPower(-FEEDER_41);
             }
 
             // Handle shooter wheel speed
@@ -83,6 +77,9 @@ public class MyTestOpMode extends LinearOpMode {
             } else {
                 shooter_67.setPower(0);
             }
+
+            telemetry.addData("Right Drive Pos: ", rightDrive_67.getCurrentPosition());
+            telemetry.addData("Left Drive Pos: ", leftDrive_67.getCurrentPosition());
             telemetry.addData("Shooter Power", shooter_67.getVelocity(AngleUnit.DEGREES));
 
 
