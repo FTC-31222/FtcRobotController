@@ -14,11 +14,14 @@ public class DriveAutoOpMode extends LinearOpMode {
     final double kMaxSpeed = 0.25;
 
 
-    DcMotorEx leftDrive_67 = (DcMotorEx) hardwareMap.dcMotor.get("leftDrive");
-    DcMotorEx rightDrive_67 = (DcMotorEx) hardwareMap.dcMotor.get("rightDrive");
+    DcMotorEx leftDrive_67;
+    DcMotorEx rightDrive_67;
 
     @Override
     public void runOpMode() throws InterruptedException {
+        leftDrive_67 = (DcMotorEx) hardwareMap.dcMotor.get("leftDrive");
+        rightDrive_67 = (DcMotorEx) hardwareMap.dcMotor.get("rightDrive");
+
         rightDrive_67.setDirection(DcMotor.Direction.FORWARD);
         leftDrive_67.setDirection(DcMotor.Direction.REVERSE);
 
