@@ -22,8 +22,8 @@ public class DriveAutoOpMode extends LinearOpMode {
         leftDrive_67 = (DcMotorEx) hardwareMap.dcMotor.get("leftDrive");
         rightDrive_67 = (DcMotorEx) hardwareMap.dcMotor.get("rightDrive");
 
-        rightDrive_67.setDirection(DcMotor.Direction.FORWARD);
-        leftDrive_67.setDirection(DcMotor.Direction.REVERSE);
+        rightDrive_67.setDirection(DcMotor.Direction.REVERSE);
+        leftDrive_67.setDirection(DcMotor.Direction.FORWARD);
 
         waitForStart();
         driveForwardTime(2000);
