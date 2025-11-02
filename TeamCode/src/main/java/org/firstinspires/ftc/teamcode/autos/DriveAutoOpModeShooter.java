@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+//  this is for auto mode to shoot the ball
 
 @Autonomous(name="Drive Auto Shooter", group="Autonomous", preselectTeleOp="MainOpMode")
 public class DriveAutoOpModeShooter extends LinearOpMode {
@@ -47,7 +48,7 @@ public class DriveAutoOpModeShooter extends LinearOpMode {
         shooter_67.setVelocity(150, AngleUnit.DEGREES);
         shooter_67.setPower(SHOOTER_41);
         sleep(1000);
-//1
+      //1
         feederRight_67.setPower(-FEEDER_41);
         feederLeft_67.setPower(FEEDER_41);
         sleep(500);
