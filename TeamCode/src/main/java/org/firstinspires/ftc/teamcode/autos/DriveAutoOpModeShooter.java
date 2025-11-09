@@ -6,11 +6,12 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 //  this is for auto mode to shoot the ball
 
-@Autonomous(name="Drive Auto Shooter", group="Autonomous", preselectTeleOp="MainOpMode")
+@Autonomous(name="Drive Auto 67", group="Autonomous", preselectTeleOp="MainOpMode")
 public class DriveAutoOpModeShooter extends LinearOpMode {
     final double kWheelDiameter =  3.77953; // inches of wheel diameterRadius
     final double kEncoderTicksPerRev = 537.7;
@@ -23,6 +24,8 @@ public class DriveAutoOpModeShooter extends LinearOpMode {
 
     final double FEEDER_41 = 1;
     final double SHOOTER_41 = 0.52;
+
+    ElapsedTime runtime = new ElapsedTime();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -38,8 +41,6 @@ public class DriveAutoOpModeShooter extends LinearOpMode {
         shooter_67.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooter_67.setVelocityPIDFCoefficients(139,0,0,0); //33 before
 
-
-
         waitForStart();
       //  rightDrive_67.setDirection(DcMotorSimple.Direction.FORWARD);
       //  leftDrive_67.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -47,29 +48,60 @@ public class DriveAutoOpModeShooter extends LinearOpMode {
 
         shooter_67.setVelocity(150, AngleUnit.DEGREES);
         shooter_67.setPower(SHOOTER_41);
-        sleep(1000);
+
+        runtime.reset();
+        while (runtime.milliseconds() <= 1000) {
+        }
+        //sleep(1000)
+
+
+        ;
       //1
-        feederRight_67.setPower(-FEEDER_41);
-        feederLeft_67.setPower(FEEDER_41);
-        sleep(500);
         feederRight_67.setPower(FEEDER_41);
         feederLeft_67.setPower(-FEEDER_41);
-        sleep(1000);
+        runtime.reset();
+        while (runtime.milliseconds() <= 500) {
+        }
+        feederRight_67.setPower(-FEEDER_41);
+        feederLeft_67.setPower(FEEDER_41);
+        runtime.reset();
+        while (runtime.milliseconds() <= 250) {
+        }
+        feederRight_67.setPower(FEEDER_41);
+        feederLeft_67.setPower(-FEEDER_41);
 
-        //2
+        // 2
+        runtime.reset();
+        while (runtime.milliseconds() <= 1000) {
+        }
         feederRight_67.setPower(-FEEDER_41);
         feederLeft_67.setPower(FEEDER_41);
-        sleep(500);
+        runtime.reset();
+        while (runtime.milliseconds() <= 250) {
+        }
         feederRight_67.setPower(FEEDER_41);
         feederLeft_67.setPower(-FEEDER_41);
-        sleep(1000);
+        runtime.reset();
+        while (runtime.milliseconds() <= 1000) {
+        }
 
-        //3
+        // 3
+        runtime.reset();
+        while (runtime.milliseconds() <= 1000) {
+        }
         feederRight_67.setPower(-FEEDER_41);
         feederLeft_67.setPower(FEEDER_41);
-        sleep(500);
+        runtime.reset();
+        while (runtime.milliseconds() <= 250) {
+        }
         feederRight_67.setPower(FEEDER_41);
         feederLeft_67.setPower(-FEEDER_41);
+        runtime.reset();
+        while (runtime.milliseconds() <= 1000) {
+        }
+        runtime.reset();
+
+
 
     //    telemetry.addData("Right Drive Pos: ", rightDrive_67.getCurrentPosition());
       //  telemetry.addData("Left Drive Pos: ", leftDrive_67.getCurrentPosition());
