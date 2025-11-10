@@ -26,7 +26,7 @@ public class DriveAutoOpMode extends LinearOpMode {
         leftDrive_67.setDirection(DcMotor.Direction.FORWARD);
 
         waitForStart();
-        driveForwardTime(2000);
+        driveBackwardTime(2000);
     }
 
     public double getRightPositionInches() {
@@ -47,7 +47,7 @@ public class DriveAutoOpMode extends LinearOpMode {
         leftDrive_67.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftDrive_67.setPower(kMaxSpeed);
     }
-    public void driveForwardTime(long ms){
+    public void driveBackwardTime(long ms){
         leftDrive_67.setPower(kMaxSpeed);
         rightDrive_67.setPower(kMaxSpeed);
         sleep(ms);

@@ -11,8 +11,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 //  this is for auto mode to shoot the ball
 
-@Autonomous(name="Auto Drive Shooter from Blue", group="Autonomous", preselectTeleOp="MainOpMode")
-public class DriveAutoOpModeShooter extends LinearOpMode {
+@Autonomous(name="Auto Drive Shooter from Red", group="Autonomous", preselectTeleOp="MainOpMode")
+public class DriveAutoOpModeShooterRed extends LinearOpMode {
     final double kWheelDiameter =  3.77953; // inches of wheel diameterRadius
     final double kEncoderTicksPerRev = 537.7;
 
@@ -29,8 +29,8 @@ public class DriveAutoOpModeShooter extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-       // leftDrive_67 = (DcMotorEx) hardwareMap.dcMotor.get("leftDrive");;
-       // rightDrive_67 = (DcMotorEx) hardwareMap.dcMotor.get("rightDrive");
+        // leftDrive_67 = (DcMotorEx) hardwareMap.dcMotor.get("leftDrive");;
+        // rightDrive_67 = (DcMotorEx) hardwareMap.dcMotor.get("rightDrive");
 
 
         CRServo feederRight_67 = hardwareMap.crservo.get("feederRight");
@@ -42,8 +42,8 @@ public class DriveAutoOpModeShooter extends LinearOpMode {
         shooter_67.setVelocityPIDFCoefficients(139,0,0,0); //33 before
 
         waitForStart();
-      //  rightDrive_67.setDirection(DcMotorSimple.Direction.FORWARD);
-      //  leftDrive_67.setDirection(DcMotorSimple.Direction.REVERSE);
+        //  rightDrive_67.setDirection(DcMotorSimple.Direction.FORWARD);
+        //  leftDrive_67.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         shooter_67.setVelocity(150, AngleUnit.DEGREES);
@@ -56,7 +56,7 @@ public class DriveAutoOpModeShooter extends LinearOpMode {
 
 
         ;
-      //1
+        //1
         feederRight_67.setPower(FEEDER_41);
         feederLeft_67.setPower(-FEEDER_41);
         runtime.reset();
@@ -113,13 +113,13 @@ public class DriveAutoOpModeShooter extends LinearOpMode {
 
 
 
-    //    telemetry.addData("Right Drive Pos: ", rightDrive_67.getCurrentPosition());
-      //  telemetry.addData("Left Drive Pos: ", leftDrive_67.getCurrentPosition());
-      //  telemetry.addData("Shooter Power", shooter_67.getVelocity(AngleUnit.DEGREES));
+        //    telemetry.addData("Right Drive Pos: ", rightDrive_67.getCurrentPosition());
+        //  telemetry.addData("Left Drive Pos: ", leftDrive_67.getCurrentPosition());
+        //  telemetry.addData("Shooter Power", shooter_67.getVelocity(AngleUnit.DEGREES));
 
 
-       // telemetry.update();
-       // driveForwardTime(2000);
+        // telemetry.update();
+        // driveForwardTime(2000);
     }
 
     public double getRightPositionInches() {
@@ -142,8 +142,8 @@ public class DriveAutoOpModeShooter extends LinearOpMode {
         leftDrive_67.setPower(kMaxSpeed);
     }
     public void driveForwardTime(long ms){
-        leftDrive_67.setPower(kMaxSpeed/3);
-        rightDrive_67.setPower(kMaxSpeed);
+        leftDrive_67.setPower(kMaxSpeed);
+        rightDrive_67.setPower(kMaxSpeed/3);
         sleep(ms);
 
     }
