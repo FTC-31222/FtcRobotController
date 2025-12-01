@@ -15,8 +15,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 public class MainOpMode extends LinearOpMode {
     // Motor speeds
     final double MAX_SPEED_41 = 0.75;
-    final double FEEDER_41 = 1;
+    final double FEEDER_41 = 0.33;
     final double SHOOTER_41 = 0.52;
+    boolean isShooterOn = false;
+    boolean lastShooterToggle = false;
     final double FASTER_SHOOTER_41 = 0.67;
     @Override
     public void runOpMode() throws InterruptedException {
@@ -67,16 +69,19 @@ public class MainOpMode extends LinearOpMode {
             // Handle shooter wheel speed
             // If user press dpad_up, we spin at "normal" speed
             // If left_trigger is pressed, we increase the speed.
-            if (gamepad2.dpad_up) {
-                shooter_67.setVelocity(150, AngleUnit.DEGREES);
-                shooter_67.setPower(1);
-            } else if (gamepad2.left_trigger > 0.0) {
-                shooter_67.setPower(FASTER_SHOOTER_41);;
-            } else if (gamepad2.dpad_down) {
+            if (gamepad2.dpad_down) {
                 shooter_67.setPower(-SHOOTER_41);
+            } else if (isShooterOn ) {
+                shooter_67.setVelocity(160, AngleUnit.DEGREES);
+                shooter_67.setPower(1);
             } else {
                 shooter_67.setPower(0);
             }
+
+            if(lastShooterToggle != gamepad2.dpad_up && gamepad2.dpad_up) {
+                isShooterOn = !isShooterOn;
+            }
+            lastShooterToggle = gamepad2.dpad_up;
 
             telemetry.addData("Right Drive Pos: ", rightDrive_67.getCurrentPosition());
             telemetry.addData("Left Drive Pos: ", leftDrive_67.getCurrentPosition());

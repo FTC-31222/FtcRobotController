@@ -46,7 +46,7 @@ public class DriveAutoOpModeShooter extends LinearOpMode {
       //  leftDrive_67.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
-        shooter_67.setVelocity(150, AngleUnit.DEGREES);
+        shooter_67.setVelocity(160, AngleUnit.DEGREES);
         shooter_67.setPower(SHOOTER_41);
 
         runtime.reset();
