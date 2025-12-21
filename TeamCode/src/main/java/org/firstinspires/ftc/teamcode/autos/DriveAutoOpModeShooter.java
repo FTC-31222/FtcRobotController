@@ -46,16 +46,12 @@ public class DriveAutoOpModeShooter extends LinearOpMode {
       //  leftDrive_67.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
-        shooter_67.setVelocity(160, AngleUnit.DEGREES);
+        shooter_67.setVelocity(150, AngleUnit.DEGREES);
         shooter_67.setPower(SHOOTER_41);
 
         runtime.reset();
         while (runtime.milliseconds() <= 1000) {
         }
-        //sleep(1000)
-
-
-        ;
       //1
         feederRight_67.setPower(FEEDER_41);
         feederLeft_67.setPower(-FEEDER_41);
@@ -72,7 +68,7 @@ public class DriveAutoOpModeShooter extends LinearOpMode {
 
         // 2
         runtime.reset();
-        while (runtime.milliseconds() <= 1000) {
+        while (runtime.milliseconds() <= 2000) {
         }
         feederRight_67.setPower(-FEEDER_41);
         feederLeft_67.setPower(FEEDER_41);
@@ -87,7 +83,7 @@ public class DriveAutoOpModeShooter extends LinearOpMode {
 
         // 3
         runtime.reset();
-        while (runtime.milliseconds() <= 1000) {
+        while (runtime.milliseconds() <= 2000) {
         }
         feederRight_67.setPower(-FEEDER_41);
         feederLeft_67.setPower(FEEDER_41);
@@ -108,7 +104,6 @@ public class DriveAutoOpModeShooter extends LinearOpMode {
         rightDrive_67.setDirection(DcMotor.Direction.REVERSE);
         leftDrive_67.setDirection(DcMotor.Direction.FORWARD);
 
-        waitForStart();
         driveForwardTime(5000);
 
 
