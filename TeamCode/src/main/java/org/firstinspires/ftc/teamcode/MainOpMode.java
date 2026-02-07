@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 @TeleOp(name="MainOpMode")
 public class MainOpMode extends LinearOpMode {
     // Motor speeds
-    final double MAX_SPEED_41 = 0.75;
+    final double MAX_SPEED_41 = 0.95;
     final double FEEDER_41 = 0.33;
     final double SHOOTER_41 = 0.52;
     boolean isShooterOn = false;
