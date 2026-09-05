@@ -14,9 +14,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 @TeleOp(name="MainOpMode")
 public class MainOpMode extends LinearOpMode {
     // Motor speeds
-    final double MAX_SPEED_41 = 0.75;
-    final double FEEDER_41 = 1;
+    final double MAX_SPEED_41 = 0.95;
+    final double FEEDER_41 = 0.33;
     final double SHOOTER_41 = 0.52;
+    boolean isShooterOn = false;
+    boolean lastShooterToggle = false;
     final double FASTER_SHOOTER_41 = 0.67;
     @Override
     public void runOpMode() throws InterruptedException {
@@ -62,6 +64,40 @@ public class MainOpMode extends LinearOpMode {
             rightDriveBack.setPower(backRightPower);
 
             if(isStopRequested()) return;
+
+            leftDrive_67.setPower(leftInput);
+            rightDrive_67.setPower(rightInput);
+
+            if(gamepad2.y) {
+                feederRight_67.setPower(-FEEDER_41);
+                feederLeft_67.setPower(FEEDER_41);
+            } else{
+                feederRight_67.setPower(FEEDER_41);
+                feederLeft_67.setPower(-FEEDER_41);
+            }
+
+            // Handle shooter wheel speed
+            // If user press dpad_up, we spin at "normal" speed
+            // If left_trigger is pressed, we increase the speed.
+            if (gamepad2.dpad_down) {
+                shooter_67.setPower(-SHOOTER_41);
+            } else if (isShooterOn ) {
+                shooter_67.setVelocity(160, AngleUnit.DEGREES);
+                shooter_67.setPower(1);
+            } else {
+                shooter_67.setPower(0);
+            }
+
+            if(lastShooterToggle != gamepad2.dpad_up && gamepad2.dpad_up) {
+                isShooterOn = !isShooterOn;
+            }
+            lastShooterToggle = gamepad2.dpad_up;
+
+            telemetry.addData("Right Drive Pos: ", rightDrive_67.getCurrentPosition());
+            telemetry.addData("Left Drive Pos: ", leftDrive_67.getCurrentPosition());
+            telemetry.addData("Shooter Power", shooter_67.getVelocity(AngleUnit.DEGREES));
+
+            telemetry.update();
         }
 //
 //        CRServo feederRight_67 = hardwareMap.crservo.get("feederRight");
