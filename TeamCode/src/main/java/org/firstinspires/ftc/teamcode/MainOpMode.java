@@ -8,11 +8,18 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @TeleOp(name="MainOpMode")
 public class MainOpMode extends LinearOpMode {
     // Motor speeds
-    
+    final int SHOOTER_VELOCITY = 205;
+    final double SHOOTER_POWER = 0.60;
+    final double INTAKE_POWER = 0.7;
+    final double GATE = 0.30;
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -21,12 +28,20 @@ public class MainOpMode extends LinearOpMode {
         DcMotor leftDriveBack = hardwareMap.dcMotor.get("leftDriveBack");
         DcMotor rightDriveBack = hardwareMap.dcMotor.get("rightDriveBack");
         DcMotor intake  = hardwareMap.dcMotor.get("intake");
+        DcMotorEx shooter =(DcMotorEx) hardwareMap.dcMotor.get("shooter");
+        Servo gate = hardwareMap.servo.get("gate");
 
         leftDriveFront.setDirection(REVERSE);
         leftDriveBack.setDirection(REVERSE);
         rightDriveFront.setDirection(FORWARD);
         rightDriveBack.setDirection(FORWARD);
         intake.setDirection(FORWARD);
+        gate.setDirection(Servo.Direction.REVERSE);
+
+        shooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooter.setVelocityPIDFCoefficients(150,0,0,0);
+        shooter.setDirection(REVERSE);
 
         waitForStart();
 
@@ -47,12 +62,28 @@ public class MainOpMode extends LinearOpMode {
             // Intake (or reverse to outtake)
             if (gamepad1.right_bumper) {
                 intake.setDirection(FORWARD);
-                intake.setPower(1.0);
+                intake.setPower(INTAKE_POWER);
             } else if (gamepad1.left_bumper) {
                 intake.setDirection(REVERSE);
-                intake.setPower(1.0);
+                intake.setPower(INTAKE_POWER);
             } else {
                 intake.setPower(0);
+            }
+
+            // Shooter
+            if (gamepad1.a) {
+                shooter.setVelocity(SHOOTER_VELOCITY, AngleUnit.DEGREES);
+                shooter.setPower(SHOOTER_POWER);
+            } else if (gamepad1.b) {
+                shooter.setVelocity(0, AngleUnit.DEGREES);
+                shooter.setPower(0);
+            }
+
+            // Gate
+            if (gamepad1.y) {
+                gate.setPosition(GATE);
+            } else {
+                gate.setPosition(0.0);
             }
 
             leftDriveFront.setPower(frontLeftPower);
