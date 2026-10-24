@@ -1,58 +1,116 @@
 package org.firstinspires.ftc.teamcode.autos;
 
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Drive Auto", group="Autonomous", preselectTeleOp="MainOpMode")
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+
+@Autonomous(name="01 - Normal Shoot and Park", group="Autonomous", preselectTeleOp="MainOpMode")
 public class DriveAutoOpMode extends LinearOpMode {
-    final double kWheelDiameter =  3.77953; // inches of wheel diameterRadius
-    final double kEncoderTicksPerRev = 537.7;
-    
-    final double kMaxSpeed = 0.25;
-
-
-    DcMotorEx leftDrive_67;
-    DcMotorEx rightDrive_67;
+    final int SHOOTER_VELOCITY = 180;
+    final double SHOOTER_POWER = 0.65;
+    final double GATE = 0.30;
+    final double kMaxSpeed = 0.2;
+    DcMotor leftDriveFront;
+    DcMotor rightDriveFront;
+    DcMotor leftDriveBack;
+    DcMotor rightDriveBack;
+    DcMotor intake;
+    DcMotorEx shooter;
+    Servo gate;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        leftDrive_67 = (DcMotorEx) hardwareMap.dcMotor.get("leftDrive");
-        rightDrive_67 = (DcMotorEx) hardwareMap.dcMotor.get("rightDrive");
+        leftDriveFront = hardwareMap.dcMotor.get("leftDriveFront");
+        rightDriveFront = hardwareMap.dcMotor.get("rightDriveFront");
+        leftDriveBack = hardwareMap.dcMotor.get("leftDriveBack");
+        rightDriveBack = hardwareMap.dcMotor.get("rightDriveBack");
+        intake  = hardwareMap.dcMotor.get("intake");
+        shooter =(DcMotorEx) hardwareMap.dcMotor.get("shooter");
+        gate = hardwareMap.servo.get("gate");
 
-        rightDrive_67.setDirection(DcMotor.Direction.REVERSE);
-        leftDrive_67.setDirection(DcMotor.Direction.FORWARD);
+        leftDriveFront.setDirection(REVERSE);
+        leftDriveBack.setDirection(REVERSE);
+        rightDriveFront.setDirection(FORWARD);
+        rightDriveBack.setDirection(FORWARD);
+        intake.setDirection(FORWARD);
+        gate.setDirection(Servo.Direction.REVERSE);
 
+        leftDriveFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftDriveBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightDriveFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightDriveBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        shooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooter.setVelocityPIDFCoefficients(160,0,0,0);
+        shooter.setDirection(REVERSE);
+
+        ElapsedTime runtime = new ElapsedTime();
         waitForStart();
-        driveBackwardTime(2000);
+
+        // Spin up shooter
+        shooter.setVelocity(SHOOTER_VELOCITY, AngleUnit.DEGREES);
+        shooter.setPower(SHOOTER_POWER);
+        runtime.reset();
+        while (runtime.milliseconds() <= 1500) {
+        }
+
+        // Open Gate
+        runtime.reset();
+        gate.setPosition(GATE);
+        while (runtime.milliseconds() <= 5000) {
+        }
+        shooter.setPower(0.0);
+        gate.setPosition(0);
+
+
+        // Back
+        leftDriveFront.setPower(-kMaxSpeed);
+        leftDriveBack.setPower(-kMaxSpeed);
+        rightDriveFront.setPower(-kMaxSpeed);
+        rightDriveBack.setPower(-kMaxSpeed);
+        runtime.reset();
+        while (runtime.milliseconds() <= 1000) {
+        }
+
+        // Right Strife
+        leftDriveFront.setPower(kMaxSpeed);
+        leftDriveBack.setPower(-kMaxSpeed);
+        rightDriveFront.setPower(-kMaxSpeed);
+        rightDriveBack.setPower(kMaxSpeed);
+        runtime.reset();
+        while (runtime.milliseconds() <= 3000) {
+        }
+
+        // Back
+        leftDriveFront.setPower(-kMaxSpeed);
+        leftDriveBack.setPower(-kMaxSpeed);
+        rightDriveFront.setPower(-kMaxSpeed);
+        rightDriveBack.setPower(-kMaxSpeed);
+        runtime.reset();
+        while (runtime.milliseconds() <= 6500) {
+        }
+
+        // Right Strife
+        leftDriveFront.setPower(kMaxSpeed);
+        leftDriveBack.setPower(-kMaxSpeed);
+        rightDriveFront.setPower(-kMaxSpeed);
+        rightDriveBack.setPower(kMaxSpeed);
+        runtime.reset();
+        while (runtime.milliseconds() <= 1200) {
+        }
+
+
     }
 
-    public double getRightPositionInches() {
-        return rightDrive_67.getCurrentPosition() * Math.PI * kWheelDiameter / kEncoderTicksPerRev;
-    }
-    public double getLeftPositionInches() {
-        return leftDrive_67.getCurrentPosition() * Math.PI * kWheelDiameter / kEncoderTicksPerRev;
-    }
-    public void driveRight(double inches){
-        int x = (int)(inches * kEncoderTicksPerRev / (Math.PI * kWheelDiameter));
-        rightDrive_67.setTargetPosition(x);
-        rightDrive_67.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightDrive_67.setPower(kMaxSpeed);
-    }
-    public void driveLeft(double inches){
-        int x = (int)(inches * kEncoderTicksPerRev / (Math.PI * kWheelDiameter));
-        leftDrive_67.setTargetPosition(x);
-        leftDrive_67.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leftDrive_67.setPower(kMaxSpeed);
-    }
-    public void driveBackwardTime(long ms){
-        leftDrive_67.setPower(kMaxSpeed);
-        rightDrive_67.setPower(kMaxSpeed);
-        sleep(ms);
-
-    }
-    
 }
 
