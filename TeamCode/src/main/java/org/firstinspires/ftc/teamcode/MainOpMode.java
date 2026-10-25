@@ -74,7 +74,13 @@ public class MainOpMode extends LinearOpMode {
                 y = -0.2;
             } else if (gamepad2.dpad_down) {
                 y = 0.2;
+            } else if (gamepad2.left_bumper) {
+                x=0.2;
+            } else if (gamepad2.right_bumper) {
+                x=-0.2;
             }
+
+
 
             // Shake it
             if (gamepad2.right_trigger_pressed) {

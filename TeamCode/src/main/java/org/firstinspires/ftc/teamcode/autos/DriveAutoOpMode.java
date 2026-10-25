@@ -15,10 +15,10 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @Autonomous(name="01 - Normal Shoot and Park", group="Autonomous", preselectTeleOp="MainOpMode")
 public class DriveAutoOpMode extends LinearOpMode {
-    final int SHOOTER_VELOCITY = 180;
-    final double SHOOTER_POWER = 0.65;
+    final int SHOOTER_VELOCITY = 170;
+    final double SHOOTER_POWER = 0.60;
     final double GATE = 0.30;
-    final double kMaxSpeed = 0.2;
+    final double kMaxSpeed = 0.25;
     DcMotor leftDriveFront;
     DcMotor rightDriveFront;
     DcMotor leftDriveBack;
@@ -88,7 +88,7 @@ public class DriveAutoOpMode extends LinearOpMode {
         rightDriveFront.setPower(-kMaxSpeed);
         rightDriveBack.setPower(kMaxSpeed);
         runtime.reset();
-        while (runtime.milliseconds() <= 3000) {
+        while (runtime.milliseconds() <= 4000) {
         }
 
         // Back
@@ -97,7 +97,7 @@ public class DriveAutoOpMode extends LinearOpMode {
         rightDriveFront.setPower(-kMaxSpeed);
         rightDriveBack.setPower(-kMaxSpeed);
         runtime.reset();
-        while (runtime.milliseconds() <= 6500) {
+        while (runtime.milliseconds() <= 7000) {
         }
 
         // Right Strife
@@ -106,7 +106,7 @@ public class DriveAutoOpMode extends LinearOpMode {
         rightDriveFront.setPower(-kMaxSpeed);
         rightDriveBack.setPower(kMaxSpeed);
         runtime.reset();
-        while (runtime.milliseconds() <= 1200) {
+        while (runtime.milliseconds() <= 1600) {
         }
 
 
